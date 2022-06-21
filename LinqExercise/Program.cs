@@ -31,35 +31,45 @@ namespace LinqExercise
             //TODONE: Add an employee to the end of the list without using employees.Add()
             
             Console.WriteLine($"\nnumbers sum: {numbers.Sum()}");
+
             Console.WriteLine($"\nnumbers average: {numbers.Average()}");
-            var ascOrder = numbers.OrderBy(x => x);
+
             Console.WriteLine("\nascending order:");
-            foreach (var num in ascOrder) { Console.WriteLine(num); }
-            var descOrder = numbers.OrderByDescending(x => x);
+            var ascOrder = numbers.OrderBy(x => x);
+            ascOrder.ToList().ForEach(Console.WriteLine);
+
             Console.WriteLine("\ndescending order:");
-            foreach (var num in descOrder) { Console.WriteLine(num); }
+            var descOrder = numbers.OrderByDescending(x => x);
+            descOrder.ToList().ForEach(Console.WriteLine);
+
             Console.WriteLine($"\ngreater than  6:");
             var greaterThenSix = numbers.Where(x => x > 6);
-            foreach (var num in greaterThenSix) { Console.WriteLine(num); }
+            greaterThenSix.ToList().ForEach(Console.WriteLine);
+
             Console.WriteLine("\nfirst four, ascending order:");
-            foreach (var num in ascOrder.Take(4)) { Console.WriteLine(num); }
+            ascOrder.Take(4).ToList().ForEach(Console.WriteLine);
+
+            Console.WriteLine("\nage at index 4, printed in descending order:");
             numbers.SetValue(300, 4);
             var sortedAge = numbers.OrderByDescending(x => x);
-            Console.WriteLine("\nage at index 4, printed in descending order:");
-            foreach (var num in sortedAge) { Console.WriteLine(num); }
+            sortedAge.ToList().ForEach(Console.WriteLine);
+
             var employees = CreateEmployees();
-            Console.WriteLine("first aname starts with 'C' or 'S':");
+
+            Console.WriteLine("first name starts with 'C' or 'S':");
             var cOrS = employees.Where(employee => employee.FirstName.StartsWith('C') || employee.FirstName.StartsWith('S')).OrderBy(employee => employee.FirstName);
-            foreach (var guy in cOrS) { Console.WriteLine(guy.FullName); }
-            var over26 = employees.Where(employee => employee.Age > 26).OrderBy(emplyoee => emplyoee.Age).ThenBy(employee => employee.FirstName);
+            cOrS.ToList().ForEach(x => Console.WriteLine(x.FullName));
+
             Console.WriteLine("\nemployees over 26, ordered by age then first name");
-            foreach (var guy in over26) { Console.WriteLine($"{guy.FirstName}, {guy.Age}"); }
+            var over26 = employees.Where(employee => employee.Age > 26).OrderBy(emplyoee => emplyoee.Age).ThenBy(employee => employee.FirstName);
+            over26.ToList().ForEach(x => Console.WriteLine($"{x.FirstName}, {x.Age}"));
+
             var nosey = employees.Where(employee => employee.YearsOfExperience <= 10 && employee.Age > 35);
             Console.WriteLine($"\nsum and average of employees with 10 years or less of experience who are also greater than 35 years old. \nsum: {nosey.Sum(employee => employee.YearsOfExperience)}, average: {nosey.Average(employee => employee.YearsOfExperience)}");
             employees = employees.Append(new Employee("Corey", "Martin", 31, 1)).ToList();
-            Console.WriteLine("\nadded corey martin as employee. all employees:");
-            foreach (var emp in employees) { Console.WriteLine($"{emp.FirstName} {emp.LastName}, Age: {emp.Age}, YOE: {emp.YearsOfExperience}"); }
 
+            Console.WriteLine("\nadded corey martin as employee. all employees:");
+            employees.ToList().ForEach(x => Console.WriteLine($"{x.FirstName} {x.LastName}, Age: {x.Age}, YOE: {x.YearsOfExperience}"));
             Console.WriteLine();
 
             Console.ReadLine();
